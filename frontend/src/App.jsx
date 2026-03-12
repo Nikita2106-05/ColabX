@@ -1,17 +1,23 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* This defines the "Home" route (/) and tells it to show LandingPage */}
+        {/* 1. Landing Page (Home) */}
         <Route path="/" element={<LandingPage />} />
         
-        {/* Later, we will add more routes here, like:
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/projects" element={<ProjectsPage />} /> 
-        */}
+        {/* 2. Login Page */}
+        <Route path="/login" element={<Login />} />
+        
+        {/* 3. Register Page */}
+        <Route path="/register" element={<Register />} />
+
+        {/* 4. Catch-all: If user types a wrong URL, redirect to Home */}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );

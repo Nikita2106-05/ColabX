@@ -1,7 +1,10 @@
 import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom'; // 1. Navigate import kiya
 
 export default function Hero() {
+  const navigate = useNavigate(); // 2. Hook initialize kiya
+
   return (
     <div className="relative bg-gradient-to-b from-blue-50 to-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24 lg:pt-32 lg:pb-40">
@@ -21,19 +24,29 @@ export default function Hero() {
               A smart collaboration platform for students to discover projects, build incredible teams, and win hackathons together.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <button className="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-xl shadow-blue-200 hover:bg-blue-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
+              
+              {/* Explore Projects - Filhaal isse Login par bhejte hain */}
+              <button 
+                onClick={() => navigate('/login')}
+                className="cursor-pointer bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-xl shadow-blue-200 hover:bg-blue-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 active:scale-95"
+              >
                 Explore Projects <ArrowRight size={20} />
               </button>
-              <button className="bg-white border-2 border-slate-200 text-slate-800 px-8 py-4 rounded-2xl font-bold text-lg hover:border-blue-600 hover:text-blue-600 transition-all">
+
+              {/* Join Now - Ise Register par bhejte hain */}
+              <button 
+                onClick={() => navigate('/register')}
+                className="cursor-pointer bg-white border-2 border-slate-200 text-slate-800 px-8 py-4 rounded-2xl font-bold text-lg hover:border-blue-600 hover:text-blue-600 transition-all active:scale-95"
+              >
                 Join Now
               </button>
+
             </div>
           </div>
 
           {/* Right Image/Illustration Area */}
           <div className="hidden lg:flex justify-center items-center relative">
             <div className="w-full h-[400px] bg-blue-600/10 rounded-[3rem] animate-float relative flex items-center justify-center border border-blue-100 shadow-inner">
-               {/* This is a placeholder for your image/illustration */}
                <div className="absolute inset-10 bg-white rounded-2xl shadow-2xl p-6 flex flex-col gap-4">
                   <div className="h-6 w-1/2 bg-blue-100 rounded"></div>
                   <div className="h-4 w-3/4 bg-slate-100 rounded"></div>

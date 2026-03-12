@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Dashboard from './pages/Dashboard'; // Naya Dashboard import kiya
 
 function App() {
   return (
@@ -16,7 +17,10 @@ function App() {
         {/* 3. Register Page */}
         <Route path="/register" element={<Register />} />
 
-        {/* 4. Catch-all: If user types a wrong URL, redirect to Home */}
+        {/* 4. Student Dashboard - Yahan user login ke baad aayega */}
+        <Route path="/dashboard" element={<Dashboard />} />
+
+        {/* 5. Catch-all: Galat URL par Home par redirect karein */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>

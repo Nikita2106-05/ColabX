@@ -5,6 +5,8 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard'; 
 import Teammates from './pages/Teammates'; // Naya Teammates page import kiya
 import Projects from './pages/Projects';
+import FacultyDashboard from './pages/FacultyDashboard';
+
 function App() {
   return (
     <Router>
@@ -27,6 +29,7 @@ function App() {
         {/* 6. Catch-all: Galat URL par Home par redirect karein */}
         <Route path="*" element={<Navigate to="/" />} />
         <Route path="/recommended" element={<Projects />} />
+        <Route path="/faculty-dashboard" element={<FacultyDashboard />} />
 
       </Routes>
     </Router>

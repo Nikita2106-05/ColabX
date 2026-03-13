@@ -4,7 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard'; 
 import Teammates from './pages/Teammates'; // Naya Teammates page import kiya
-
+import Projects from './pages/Projects';
 function App() {
   return (
     <Router>
@@ -26,6 +26,8 @@ function App() {
 
         {/* 6. Catch-all: Galat URL par Home par redirect karein */}
         <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/recommended" element={<Projects />} />
+
       </Routes>
     </Router>
   );

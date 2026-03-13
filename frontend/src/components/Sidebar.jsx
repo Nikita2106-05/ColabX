@@ -20,6 +20,7 @@ const Sidebar = () => {
     { icon: <MessageSquare size={22} />, label: 'Project Posts', path: '/posts' },
     { icon: <Calendar size={22} />, label: 'Events', path: '/events' },
     { icon: <CheckCircle2 size={22} />, label: 'Tracker', path: '/tracker' },
+    { icon: <Rocket size={22} />, label: 'Recommended', path: '/recommended' },
   ];
 
   return (

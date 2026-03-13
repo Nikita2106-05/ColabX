@@ -2,7 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Dashboard from './pages/Dashboard'; // Naya Dashboard import kiya
+import Dashboard from './pages/Dashboard'; 
+import Teammates from './pages/Teammates'; // Naya Teammates page import kiya
 
 function App() {
   return (
@@ -17,10 +18,13 @@ function App() {
         {/* 3. Register Page */}
         <Route path="/register" element={<Register />} />
 
-        {/* 4. Student Dashboard - Yahan user login ke baad aayega */}
+        {/* 4. Student Dashboard */}
         <Route path="/dashboard" element={<Dashboard />} />
 
-        {/* 5. Catch-all: Galat URL par Home par redirect karein */}
+        {/* 5. Find Teammates Page */}
+        <Route path="/teammates" element={<Teammates />} />
+
+        {/* 6. Catch-all: Galat URL par Home par redirect karein */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>

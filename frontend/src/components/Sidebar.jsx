@@ -12,11 +12,11 @@ import {
 } from 'lucide-react';
 
 const Sidebar = () => {
-  // Navigation Links ka array (Asaan management ke liye)
   const menuItems = [
     { icon: <LayoutDashboard size={22} />, label: 'Dashboard', path: '/dashboard' },
     { icon: <Rocket size={22} />, label: 'Recommended', path: '/recommended' },
-    { icon: <Users size={22} />, label: 'Find Teammates', path: '/find-teammates' },
+    // Yahan maine path change kiya hai: /find-teammates -> /teammates
+    { icon: <Users size={22} />, label: 'Find Teammates', path: '/teammates' }, 
     { icon: <MessageSquare size={22} />, label: 'Project Posts', path: '/posts' },
     { icon: <Calendar size={22} />, label: 'Events', path: '/events' },
     { icon: <CheckCircle2 size={22} />, label: 'Tracker', path: '/tracker' },

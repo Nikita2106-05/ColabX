@@ -1,184 +1,65 @@
-🚀 ColabX - College Project Collaboration Platform
+# 🚀 ColabX | Smart Collaboration Platform
 
-ColabX is a full-stack web application designed to help college students find projects, collaborate with teammates, and connect with faculty guides. The platform uses Machine Learning to recommend projects based on a student's skill set and interest.
+<p align="center">
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+  <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+</p>
 
-🌟 Key Features
+---
 
-👨‍🎓 For Students
+### 📝 Project Overview
+**ColabX** ek modern web-platform hai jo college students aur faculty ke beech ki gap ko khatam karta hai. Ye platform **Machine Learning** ka use karke students ko unke skills ke basis par projects recommend karta hai aur unhe sahi teammates dhundne mein madad karta hai.
 
-Skill-based Profiles: Create professional profiles highlighting technical skills and academic details.
+---
 
-ML Project Recommendations: Get personalized project suggestions based on your skills using a Scikit-learn recommendation engine.
+### ✨ Key Features
 
-Teammate Finder: Search for collaborators by branch, year, or specific skills (e.g., React, Python, IoT).
+| Feature | Description |
+| :--- | :--- |
+| **ML Recommendations** | Smart suggestions based on Student skills using Scikit-Learn. |
+| **Teammate Finder** | Search students by Branch, Year, and specific Technical Skills. |
+| **Faculty Portal** | Faculty can post subject-based projects and track progress. |
+| **Project Tracker** | Real-time progress monitoring for ongoing team projects. |
+| **Events Hub** | Centralized dashboard for Hackathons and College Events. |
 
-Project Progress Tracker: Monitor the status of ongoing collaborations.
+---
 
-Event Alerts: Stay updated with the latest college hackathons and technical events.
+### 🛠️ Tech Stack
 
-👩‍🏫 For Faculty
+#### **Frontend**
+- **Framework:** React.js (Vite)
+- **Styling:** Tailwind CSS v4.0
+- **Icons:** Lucide React
+- **Routing:** React Router DOM
 
-Project Posting: Post subject-based projects with detailed guidance steps.
+#### **Backend**
+- **Runtime:** Node.js
+- **Framework:** Express.js
+- **Database:** MongoDB (Mongoose ODM)
+- **Auth:** JWT (JSON Web Tokens) & Bcrypt.js
 
-Mentorship: Guide student teams and track their progress.
+#### **Machine Learning**
+- **Library:** Scikit-Learn
+- **Language:** Python
+- **Algorithm:** Content-based Filtering
 
-Hackathon Announcements: Post and manage department-level events.
+---
 
-🛠️ Tech Stack
+### 📂 Folder Structure
 
-Frontend:
-
-React.js (Vite)
-
-Tailwind CSS (v4.0)
-
-Lucide React (Icons)
-
-React Router DOM
-
-Backend:
-
-Node.js & Express.js
-
-MongoDB & Mongoose (ODM)
-
-JWT (JSON Web Tokens) for Authentication
-
-Bcrypt.js (Password Encryption)
-
-Machine Learning:
-
-Python
-
-Scikit-learn (Content-based filtering)
-
-Flask (To serve the ML model as an API)
-
-📂 Project Structure
-
-code
-
-Text
+```text
 ColabX/
-├── frontend/             # React + Vite + Tailwind
+├── frontend/             # React Client
 │   ├── src/
-│   │   ├── components/   # Reusable UI (Cards, Navbar, Sidebar)
-│   │   ├── pages/        # Dashboard, Login, Register, Teammates
-│   │   └── App.jsx       # Routing logic
-├── backend/              # Node.js + Express
-│   ├── models/           # Mongoose Schemas (Student, Faculty, Project)
-│   ├── routes/           # API Endpoints
+│   │   ├── components/   # UI Reusable Parts
+│   │   ├── pages/        # Main Screens (Dashboard, Login, etc.)
+│   │   └── App.jsx       # Route Definitions
+├── backend/              # Express Server
+│   ├── models/           # DB Schemas
 │   ├── controllers/      # Business Logic
-│   └── server.js         # Entry point
-└── ml-model/             # Python ML Logic
-    └── recommendation.py # Scikit-learn model
-
-🚀 Getting Started
-
-1. Clone the Repository
-
-code
-
-Bash
-
-git clone https://github.com/your-username/ColabX.git
-
-cd ColabX
-
-2. Backend Setup
-
-code
-
-Bash
-
-cd backend
-
-npm install
-
-Create a .env file in the backend folder:
-
-code
-
-Env
-
-PORT=5000
-
-MONGO_URI=your_mongodb_connection_string
-
-JWT_SECRET=your_secret_key
-
-Start the server:
-
-code
-
-Bash
-
-npm start
-
-3. Frontend Setup
-
-code
-
-Bash
-
-cd ../frontend
-
-npm install
-
-npm run dev
-
-4. ML Model Setup (Optional for now)
-
-code
-
-Bash
-
-cd ../ml-model
-
-pip install scikit-learn pandas flask
-
-python recommendation.py
-
-📈 Database Schema (Core Models)
-
-
-User (Student/Faculty): Name, Email, Password, Role, Skills, Department.
-
-Project: Title, Subject, Skills Required, Difficulty, PostedBy (Faculty ID).
-
-Post: Author (Student ID), Requirements, Content.
-
-Event: Title, Date, Type (Hackathon/Workshop).
-
-📸 Screenshots
-
-(Add your screenshots here after building the UI)
-
-Landing Page: Professional hero section.
-
-Student Dashboard: Personalized project cards.
-
-Teammate Search: Filterable student list.
-
-Faculty Portal: Form to post new projects.
-
-🤝 Contributing
-
-Fork the Project.
-
-
-Create your Feature Branch (git checkout -b feature/AmazingFeature).
-
-Commit your Changes (git commit -m 'Add some AmazingFeature').
-
-Push to the Branch (git push origin feature/AmazingFeature).
-
-Open a Pull Request.
-
-🎓 Faculty Guide
-
-Project Developed by: [Your Name]
-
-College: [Your College Name]
-
-Year: 2024-25
+│   ├── routes/           # API Endpoints
+│   └── server.js         # Entry Point
+└── ml-model/             # Python Model Logic

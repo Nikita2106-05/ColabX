@@ -1,84 +1,95 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import AddProjectForm from '../components/AddProjectForm';
-import { Megaphone, Calendar, Users, Briefcase, Plus } from 'lucide-react';
+import { Layout, Users, BookOpen, Clock, Plus, BarChart3, ChevronRight } from 'lucide-react';
 
 const FacultyDashboard = () => {
+  const [showForm, setShowForm] = useState(false);
+
+  // Dummy stats
+  const stats = [
+    { label: "Total Projects", value: "12", icon: <BookOpen className="text-blue-600" />, bg: "bg-blue-50" },
+    { label: "Active Students", value: "45", icon: <Users className="text-emerald-600" />, bg: "bg-emerald-50" },
+    { label: "Pending Requests", value: "08", icon: <Clock className="text-amber-600" />, bg: "bg-amber-50" },
+  ];
+
   return (
-    <div className="min-h-screen bg-slate-50 flex">
+    <div className="min-h-screen bg-[#F8FAFC] flex">
       <Sidebar />
 
-      <main className="flex-1 ml-64 p-8">
-        {/* Faculty Header */}
-        <header className="flex justify-between items-end mb-10">
+      <main className="flex-1 ml-64 p-10">
+        {/* Header Section */}
+        <div className="flex justify-between items-center mb-10">
           <div>
-            <span className="text-indigo-600 font-bold tracking-widest text-xs uppercase">Faculty Portal</span>
-            <h1 className="text-3xl font-black text-slate-900 mt-1">Hello, Dr. Amit Verma 👋</h1>
-            <p className="text-slate-500">Manage your subject projects and track student progress.</p>
+            <h1 className="text-3xl font-black text-slate-900">Faculty Management</h1>
+            <p className="text-slate-500 font-medium">Create and manage your subject-based projects.</p>
           </div>
-          <div className="flex gap-3">
-            <div className="bg-white px-4 py-2 rounded-2xl border border-slate-100 flex items-center gap-3">
-              <Users className="text-indigo-600" size={20} />
-              <div>
-                <p className="text-[10px] text-slate-400 font-bold uppercase">Active Teams</p>
-                <p className="text-sm font-bold text-slate-900">12 Groups</p>
-              </div>
+          <button 
+            onClick={() => setShowForm(!showForm)}
+            className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-2xl font-bold hover:bg-blue-600 transition-all shadow-lg shadow-slate-200"
+          >
+            {showForm ? "View Dashboard" : <><Plus size={20} /> Create New Project</>}
+          </button>
+        </div>
+
+        {showForm ? (
+          <div className="max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="mb-6 flex items-center gap-2 text-slate-500">
+               <button onClick={() => setShowForm(false)} className="hover:text-blue-600">Dashboard</button>
+               <ChevronRight size={16} />
+               <span className="text-slate-900 font-bold">New Project</span>
             </div>
+            <AddProjectForm onSuccess={() => setShowForm(false)} />
           </div>
-        </header>
+        ) : (
+          <div className="space-y-10">
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {stats.map((stat, i) => (
+                <div key={i} className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-5">
+                  <div className={`p-4 ${stat.bg} rounded-2xl`}>{stat.icon}</div>
+                  <div>
+                    <p className="text-slate-500 text-sm font-bold uppercase tracking-wider">{stat.label}</p>
+                    <p className="text-2xl font-black text-slate-900">{stat.value}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
 
-        <div className="grid grid-cols-12 gap-8">
-          {/* Left: Add Project Section */}
-          <div className="col-span-12 lg:col-span-8 space-y-8">
-            <section>
-              <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                <Plus className="bg-indigo-600 text-white rounded-md p-1" size={24} />
-                Post New Subject Project
-              </h2>
-              <AddProjectForm />
-            </section>
-          </div>
-
-          {/* Right: Events & Hackathons */}
-          <div className="col-span-12 lg:col-span-4 space-y-6">
-            <section className="bg-gradient-to-br from-indigo-600 to-violet-700 rounded-3xl p-6 text-white shadow-xl shadow-indigo-100">
-              <div className="flex items-center gap-2 mb-4">
-                <Megaphone size={24} />
-                <h2 className="text-xl font-bold">Post Event</h2>
+            {/* Recent Projects Table/List */}
+            <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+              <div className="p-6 border-b border-slate-50 flex justify-between items-center">
+                <h2 className="text-xl font-bold text-slate-900">Your Posted Projects</h2>
+                <BarChart3 className="text-slate-400" size={20} />
               </div>
-              <p className="text-indigo-100 text-sm mb-6">Announce hackathons, workshops, or guest lectures to all students.</p>
               
-              <div className="space-y-4">
-                <input 
-                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 placeholder:text-indigo-200 outline-none focus:bg-white/20"
-                  placeholder="Event Name"
-                />
-                <input 
-                  type="date"
-                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-indigo-100 outline-none"
-                />
-                <button className="w-full bg-white text-indigo-600 font-bold py-3 rounded-xl hover:bg-indigo-50 transition-colors">
-                  Post Hackathon
-                </button>
-              </div>
-            </section>
-
-            {/* Quick Stats/Recent Activity */}
-            <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm">
-              <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
-                <Calendar size={18} className="text-slate-400" /> Recent Posts
-              </h3>
-              <div className="space-y-4">
-                {[1, 2].map((i) => (
-                  <div key={i} className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                    <p className="text-sm font-bold text-slate-800">Advanced Java Lab Projects</p>
-                    <p className="text-[10px] text-slate-500 mt-1 uppercase font-medium">Posted 2 days ago</p>
+              <div className="divide-y divide-slate-50">
+                {[1, 2, 3].map((item) => (
+                  <div key={item} className="p-6 hover:bg-slate-50 transition-colors flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center font-bold text-slate-600">
+                        0{item}
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-900">Advanced Machine Learning Lab</h4>
+                        <p className="text-sm text-slate-500 font-medium">Subject: CS201 • Posted on 12 March</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-8">
+                      <div className="text-right">
+                        <p className="text-sm font-bold text-slate-900">14 Students</p>
+                        <p className="text-xs text-slate-400">Joined</p>
+                      </div>
+                      <button className="p-2 hover:bg-white rounded-lg border border-transparent hover:border-slate-200 transition-all text-slate-400 hover:text-blue-600">
+                        <ChevronRight size={20} />
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
           </div>
-        </div>
+        )}
       </main>
     </div>
   );

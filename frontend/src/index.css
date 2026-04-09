@@ -1,30 +1,31 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand: #2563eb;
+  /* Aapke diye huye colors */
+  --color-brand-dark: #A79277;    /* Mocha */
+  --color-brand-medium: #D1BB9E;  /* Tan */
+  --color-brand-light: #EAD8C0;   /* Beige */
+  --color-brand-cream: #FFF2E1;   /* Cream */
   
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
+  /* Text ke liye extra dark color taaki readability achi rahe */
+  --color-text-main: #2D241E;     /* Deep Coffee/Charcoal */
+}
+
+@layer base {
+  body {
+    @apply bg-brand-cream text-text-main;
+    font-family: 'Inter', sans-serif;
   }
+
+    /* Soft mesh gradient for background */
+   
+  }
+
+
+.glass-card {
+  @apply bg-white/70 backdrop-blur-md border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)];
 }
 
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  background-color: #ffffff;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-#root {
-  width: 100%;
-}
-
-.animate-float {
-  animation: float 5s ease-in-out infinite;
+.btn-primary {
+  @apply bg-slate-900 text-white px-6 py-3 rounded-2xl font-bold hover:bg-indigo-600 transition-all active:scale-95 shadow-lg shadow-indigo-100;
 }

@@ -1,162 +1,137 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // navigate add kiya
-import axios from 'axios'; // axios import kiya
-import { UserPlus, User, Hash, BookOpen, GraduationCap, Code, Mail, Lock } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserPlus, User, Mail, Lock, Building, GraduationCap, Hash } from 'lucide-react';
+import axios from 'axios';
 
 const Register = () => {
-  const navigate = useNavigate(); // redirect karne ke liye
+  const navigate = useNavigate();
+  const [role, setRole] = useState('student'); // Default role
   const [formData, setFormData] = useState({
-    name: '',
-    enrollment: '',
-    branch: '',
-    year: '1',
-    skills: '',
-    email: '',
-    password: ''
+    name: '', email: '', password: '',
+    enrollment: '', branch: '', year: '1',
+    department: '', designation: ''
   });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Backend ko data bhej rahe hain
-      const response = await axios.post('http://localhost:5000/api/auth/register', formData);
-      
-      if (response.status === 201) {
-        alert("Registration Successful! Now please login.");
-        navigate('/login'); // Success hone par login page par bhejein
-      }
-    } catch (error) {
-      alert(error.response?.data?.msg || "Registration Failed!");
+      // Backend API call
+      const response = await axios.post('http://localhost:5000/api/auth/register', {
+        ...formData,
+        role: role
+      });
+      alert(response.data.message);
+      navigate('/login');
+    } catch (err) {
+      alert(err.response?.data?.message || "Registration Failed");
     }
   };
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
-      <div className="bg-white w-full max-w-2xl rounded-2xl shadow-xl border border-slate-100 p-8">
+      <div className="bg-white w-full max-w-2xl rounded-3xl shadow-xl border border-slate-100 p-10">
+        
+        {/* Header */}
         <div className="text-center mb-8">
-          <div className="bg-blue-600 w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <UserPlus className="text-white w-6 h-6" />
+          <div className="bg-blue-600 w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-200">
+            <UserPlus className="text-white" size={28} />
           </div>
-          <h2 className="text-2xl font-bold text-slate-900">Join ColabX</h2>
-          <p className="text-slate-500">Create your student profile</p>
+          <h2 className="text-3xl font-black text-slate-900">Create Account</h2>
+          <p className="text-slate-500 mt-2">Join the ColabX community today</p>
+        </div>
+
+        {/* Role Switcher */}
+        <div className="flex bg-slate-100 p-1.5 rounded-2xl mb-8">
+          <button
+            onClick={() => setRole('student')}
+            className={`flex-1 py-3 text-sm font-bold rounded-xl transition-all ${role === 'student' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}
+          >
+            I am a Student
+          </button>
+          <button
+            onClick={() => setRole('faculty')}
+            className={`flex-1 py-3 text-sm font-bold rounded-xl transition-all ${role === 'faculty' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}
+          >
+            I am Faculty
+          </button>
         </div>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Name */}
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
-              <User className="w-4 h-4" /> Full Name
-            </label>
-            <input
-              type="text"
-              required
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none"
-              placeholder="John Doe"
-              value={formData.name}
-              onChange={(e) => setFormData({...formData, name: e.target.value})}
-            />
+          {/* Common Fields */}
+          <div className="md:col-span-1">
+            <label className="block text-sm font-bold text-slate-700 mb-2">Full Name</label>
+            <div className="relative">
+              <User className="absolute left-3 top-3 text-slate-400" size={20} />
+              <input name="name" onChange={handleChange} required className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500" placeholder="John Doe" />
+            </div>
           </div>
 
-          {/* Enrollment */}
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
-              <Hash className="w-4 h-4" /> Enrollment Number
-            </label>
-            <input
-              type="text"
-              required
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none"
-              placeholder="0123CS211XXX"
-              value={formData.enrollment}
-              onChange={(e) => setFormData({...formData, enrollment: e.target.value})}
-            />
+          <div className="md:col-span-1">
+            <label className="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-3 text-slate-400" size={20} />
+              <input name="email" type="email" onChange={handleChange} required className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500" placeholder="john@college.edu" />
+            </div>
           </div>
 
-          {/* Branch */}
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
-              <BookOpen className="w-4 h-4" /> Branch
-            </label>
-            <select
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none"
-              value={formData.branch}
-              onChange={(e) => setFormData({...formData, branch: e.target.value})}
-            >
-              <option value="">Select Branch</option>
-              <option value="CSE">CSE</option>
-              <option value="IT">IT</option>
-              <option value="ECE">ECE</option>
-            </select>
+          {/* Conditional Fields: Student Only */}
+          {role === 'student' && (
+            <>
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-2">Enrollment No.</label>
+                <div className="relative">
+                  <Hash className="absolute left-3 top-3 text-slate-400" size={20} />
+                  <input name="enrollment" onChange={handleChange} required className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500" placeholder="0123CS21..." />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-2">Branch</label>
+                <select name="branch" onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500">
+                  <option value="CSE">CSE</option>
+                  <option value="IT">IT</option>
+                  <option value="ECE">ECE</option>
+                </select>
+              </div>
+            </>
+          )}
+
+          {/* Conditional Fields: Faculty Only */}
+          {role === 'faculty' && (
+            <>
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-2">Department</label>
+                <div className="relative">
+                  <Building className="absolute left-3 top-3 text-slate-400" size={20} />
+                  <input name="department" onChange={handleChange} required className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500" placeholder="Computer Science" />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-2">Designation</label>
+                <input name="designation" onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500" placeholder="Professor" />
+              </div>
+            </>
+          )}
+
+          <div className="md:col-span-2">
+            <label className="block text-sm font-bold text-slate-700 mb-2">Password</label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-3 text-slate-400" size={20} />
+              <input name="password" type="password" onChange={handleChange} required className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••" />
+            </div>
           </div>
 
-          {/* Year */}
-          <div className="space-y-1">
-            <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
-              <GraduationCap className="w-4 h-4" /> Current Year
-            </label>
-            <select
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none"
-              value={formData.year}
-              onChange={(e) => setFormData({...formData, year: e.target.value})}
-            >
-              <option value="1st">1st Year</option>
-              <option value="2nd">2nd Year</option>
-              <option value="3rd">3rd Year</option>
-              <option value="4th">4th Year</option>
-            </select>
-          </div>
-
-          {/* Email */}
-          <div className="space-y-1 md:col-span-2">
-            <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
-              <Mail className="w-4 h-4" /> College Email ID
-            </label>
-            <input
-              type="email"
-              required
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none"
-              placeholder="john@college.edu"
-              value={formData.email}
-              onChange={(e) => setFormData({...formData, email: e.target.value})}
-            />
-          </div>
-
-          {/* Skills */}
-          <div className="space-y-1 md:col-span-2">
-            <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
-              <Code className="w-4 h-4" /> Skills (Comma separated)
-            </label>
-            <input
-              type="text"
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none"
-              placeholder="React, Python, JS"
-              value={formData.skills}
-              onChange={(e) => setFormData({...formData, skills: e.target.value})}
-            />
-          </div>
-
-          {/* Password */}
-          <div className="space-y-1 md:col-span-2">
-            <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
-              <Lock className="w-4 h-4" /> Password
-            </label>
-            <input
-              type="password"
-              required
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl outline-none"
-              placeholder="••••••••"
-              value={formData.password}
-              onChange={(e) => setFormData({...formData, password: e.target.value})}
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full md:col-span-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl shadow-lg transition-all active:scale-[0.95]"
-          >
-            Create Account
+          <button type="submit" className="md:col-span-2 w-full py-4 bg-blue-600 text-white font-bold rounded-2xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-100 mt-2">
+            Register as {role.charAt(0).toUpperCase() + role.slice(1)}
           </button>
         </form>
+
+        <p className="text-center mt-8 text-slate-600">
+          Already have an account? <Link to="/login" className="text-blue-600 font-bold hover:underline">Sign In</Link>
+        </p>
       </div>
     </div>
   );

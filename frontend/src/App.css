@@ -1,42 +1,82 @@
+/* Purana boilerplate hata kar Landing Page ke liye fix */
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left; /* Default center hata diya */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* --- Global Utilities for Futuristic Theme --- */
+
+/* Smooth Scroll behavior */
+html {
+  scroll-behavior: smooth;
+  background-color: #050505; /* Black base */
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+/* Custom Text Selection Color */
+::selection {
+  background: rgba(168, 85, 247, 0.3);
+  color: #fff;
+}
+
+/* Glassmorphism Reusable Class */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Card Hover Glow effect */
+.hover-glow:hover {
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
+  border-color: rgba(168, 85, 247, 0.4);
+  transform: translateY(-5px);
+}
+
+/* --- Specific Animations --- */
+
+/* Text Shimmer Effect for Headings */
+.text-shimmer {
+  background: linear-gradient(
+    to right,
+    #94a3b8 0%,
+    #ffffff 50%,
+    #94a3b8 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes shimmer {
   to {
-    transform: rotate(360deg);
+    background-position: 200% center;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* Fade In Up animation for elements */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.card {
-  padding: 2em;
+/* Hidden Scrollbar but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
-
-.read-the-docs {
-  color: #888;
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

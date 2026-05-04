@@ -1,101 +1,130 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from '../components/layout/Navbar';
 import Hero from '../components/Hero';
 import Features from '../components/Features';
 import Footer from '../components/layout/Footer';
-import { ChevronRight, Sparkles, Zap, Target } from 'lucide-react';
+import { ChevronRight, Sparkles, Zap, Target, Users, Code, Rocket } from 'lucide-react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function LandingPage() {
   const navigate = useNavigate();
+  const mainRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Fade in animations for sections
+      gsap.utils.toArray('.reveal').forEach((elem) => {
+        gsap.fromTo(elem, 
+          { opacity: 0, y: 50 },
+          { 
+            opacity: 1, y: 0, duration: 1, 
+            scrollTrigger: {
+              trigger: elem,
+              start: "top 85%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+      });
+    }, mainRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <div className="min-h-screen bg-[#FDFCFE]"> {/* Very light lilac/white bg */}
+    <div ref={mainRef} className="min-h-screen bg-[#050505] text-white selection:bg-purple-500/30 overflow-x-hidden">
       <Navbar />
       
-      {/* Hero Section Wrapper - Adding a subtle gradient background */}
-      <div className="bg-gradient-to-b from-[#C8ACD6]/20 to-transparent">
+      {/* Hero Section with Floating Energy Object */}
+      <div className="relative">
         <Hero />
       </div>
       
-      {/* How It Works Section - Reimagined with new colors */}
-      <section className="py-24 bg-white relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#C8ACD6]/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
-        
+      {/* How It Works Section - High Tech Look */}
+      <section className="py-32 relative">
+        {/* Neon Blur Orbs Background */}
+        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+
         <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-black text-[#17153B] mb-4">
-              How <span className="text-[#433D8B]">ColabX</span> Works
+          <div className="text-center mb-24 reveal">
+            <h2 className="text-5xl md:text-7xl font-bold mb-6 tracking-tighter">
+              The <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">Evolution</span> of Learning
             </h2>
-            <p className="text-[#433D8B] font-medium max-w-xl mx-auto">
-              Your journey from a solo learner to a project leader starts here.
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto font-light tracking-wide">
+              Connect with the brightest minds across campus and turn your ideas into reality through seamless collaboration.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
             {[
               { 
-                n: "01", t: "Join", d: "Create your profile with your unique skill set.",
-                icon: <Zap className="text-[#2E236C]" size={24} />,
-                color: "bg-[#C8ACD6]"
+                n: "01", t: "Find Synergy", d: "Discover teammates whose skills perfectly complement yours.",
+                icon: <Target className="text-purple-400" size={32} />,
+                glow: "group-hover:shadow-[0_0_30px_rgba(168,85,247,0.2)]"
               },
               { 
-                n: "02", t: "Find", d: "Our ML engine matches you with the perfect projects.",
-                icon: <Target className="text-[#2E236C]" size={24} />,
-                color: "bg-[#C8ACD6]" 
+                n: "02", t: "Launch Projects", d: "Start your venture with professional tools and a solid team.",
+                icon: <Rocket className="text-blue-400" size={32} />,
+                glow: "group-hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]" 
               },
               { 
-                n: "03", t: "Build", d: "Collaborate with peers and build something amazing.",
-                icon: <Sparkles className="text-[#2E236C]" size={24} />,
-                color: "bg-[#C8ACD6]"
+                n: "03", t: "Scale Impact", d: "Go beyond the classroom and build something that matters.",
+                icon: <Sparkles className="text-cyan-400" size={32} />,
+                glow: "group-hover:shadow-[0_0_30px_rgba(34,211,238,0.2)]"
               }
             ].map((step, idx) => (
-              <div key={idx} className="group relative p-8 rounded-[2rem] bg-white border border-[#C8ACD6]/30 hover:border-[#433D8B]/50 transition-all duration-300 hover:shadow-2xl hover:shadow-[#433D8B]/10">
-                <div className={`${step.color} w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-black text-[#17153B] mb-6 transform group-hover:rotate-12 transition-transform`}>
+              <div key={idx} className={`reveal group relative p-10 rounded-3xl bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all duration-500 backdrop-blur-sm ${step.glow}`}>
+                <div className="mb-8 p-4 w-fit rounded-2xl bg-white/5 group-hover:scale-110 transition-transform duration-500">
                   {step.icon}
                 </div>
-                <div className="absolute top-8 right-8 text-5xl font-black text-[#C8ACD6]/20 group-hover:text-[#C8ACD6]/40 transition-colors">
+                <div className="absolute top-10 right-10 text-6xl font-bold text-white/5 group-hover:text-white/10 transition-colors">
                   {step.n}
                 </div>
-                <h3 className="text-2xl font-bold text-[#17153B] mb-3">{step.t}</h3>
-                <p className="text-[#433D8B]/80 font-medium leading-relaxed">{step.d}</p>
+                <h3 className="text-2xl font-semibold mb-4 tracking-tight">{step.t}</h3>
+                <p className="text-gray-500 leading-relaxed font-light">{step.d}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Features Section Wrapper */}
-      <div className="bg-[#FDFCFE]">
+      {/* Features Section */}
+      <div className="reveal">
         <Features />
       </div>
 
-      {/* CTA Section - Major Color Overhaul */}
-      <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="bg-[#17153B] rounded-[3.5rem] p-12 md:p-24 text-center relative overflow-hidden shadow-2xl shadow-[#17153B]/40">
-            {/* Background Gradients */}
-            <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#2E236C] rounded-full blur-[100px] opacity-50"></div>
-            <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#433D8B] rounded-full blur-[100px] opacity-50"></div>
-
+      {/* CTA Section - Ultra Modern */}
+      <section className="py-32 px-4 reveal">
+        <div className="max-w-6xl mx-auto">
+          <div className="relative rounded-[4rem] p-12 md:p-24 text-center overflow-hidden border border-white/10 bg-gradient-to-br from-white/[0.05] to-transparent backdrop-blur-xl">
+            {/* Animated Background Gradient */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.1),transparent_70%)]"></div>
+            
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-7xl font-black mb-8 leading-tight text-white">
-                Ready to collaborate <br /> 
-                <span className="text-[#C8ACD6]">across campus?</span>
+              <h2 className="text-5xl md:text-8xl font-bold mb-10 tracking-tighter leading-[0.9]">
+                Ready to <br /> 
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 animate-pulse">Collaborate?</span>
               </h2>
               
               <button 
                 onClick={() => navigate('/register')}
-                className="group cursor-pointer bg-[#C8ACD6] text-[#17153B] px-12 py-5 rounded-2xl font-black text-xl hover:bg-white hover:scale-105 transition-all active:scale-95 flex items-center gap-3 mx-auto shadow-xl shadow-black/20"
+                className="group relative px-12 py-5 bg-white text-black rounded-full font-bold text-xl hover:scale-105 transition-all active:scale-95 flex items-center gap-3 mx-auto overflow-hidden"
               >
-                Create Profile Now
-                <ChevronRight className="group-hover:translate-x-2 transition-transform" />
+                <span className="relative z-10">Start Your Journey</span>
+                <ChevronRight className="relative z-10 group-hover:translate-x-2 transition-transform" />
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-blue-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </button>
               
-              <p className="mt-8 text-[#C8ACD6]/60 font-medium">
-                Join 500+ students already building the future.
-              </p>
+              <div className="mt-12 flex items-center justify-center gap-8 text-white/40">
+                <div className="flex -space-x-3">
+                  {[1,2,3,4].map(i => <div key={i} className="w-10 h-10 rounded-full border-2 border-black bg-gray-800"></div>)}
+                </div>
+                <p className="text-sm font-medium uppercase tracking-[0.2em]">Join 500+ Innovators</p>
+              </div>
             </div>
           </div>
         </div>

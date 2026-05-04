@@ -1,31 +1,104 @@
 @import "tailwindcss";
 
 @theme {
-  /* Aapke diye huye colors */
-  --color-brand-dark: #A79277;    /* Mocha */
-  --color-brand-medium: #D1BB9E;  /* Tan */
-  --color-brand-light: #EAD8C0;   /* Beige */
-  --color-brand-cream: #FFF2E1;   /* Cream */
-  
-  /* Text ke liye extra dark color taaki readability achi rahe */
-  --color-text-main: #2D241E;     /* Deep Coffee/Charcoal */
+  /* Futuristic Cyber Palette */
+  --color-bg-main: #050505;        /* Pitch Black */
+  --color-accent-purple: #A855F7;  /* Neon Purple */
+  --color-accent-blue: #3B82F6;    /* Bright Blue */
+  --color-accent-cyan: #06B6D4;    /* Cyber Cyan */
+  --color-text-dim: #94A3B8;       /* Muted Slate */
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-brand-cream text-text-main;
+    @apply bg-[#050505] text-white;
     font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
   }
 
-    /* Soft mesh gradient for background */
-   
+  /* Custom Neon Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
   }
-
-
-.glass-card {
-  @apply bg-white/70 backdrop-blur-md border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)];
+  ::-webkit-scrollbar-track {
+    background: #050505;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #A855F7, #3B82F6);
+    border-radius: 10px;
+  }
 }
 
-.btn-primary {
-  @apply bg-slate-900 text-white px-6 py-3 rounded-2xl font-bold hover:bg-indigo-600 transition-all active:scale-95 shadow-lg shadow-indigo-100;
+/* --- Futuristic Effects --- */
+
+/* Grainy Overlay Effect (Texture) */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Glassmorphism Card Style */
+.glass-card {
+  @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.36)];
+}
+
+/* GSAP Reveal Class - Initial State */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* Neon Text Glow */
+.neon-text {
+  text-shadow: 0 0 10px rgba(168, 85, 247, 0.5), 0 0 20px rgba(168, 85, 247, 0.3);
+}
+
+/* Animations */
+
+/* Floating Animation for Hero Object */
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(2deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Plasma/Energy Pulse */
+@keyframes plasma-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); filter: blur(60px); }
+  50% { opacity: 0.6; transform: scale(1.1); filter: blur(80px); }
+}
+
+.plasma-glow {
+  animation: plasma-pulse 4s ease-in-out infinite;
+}
+
+/* Smooth Background Gradient Movement */
+@keyframes gradient-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.moving-gradient {
+  background-size: 200% 200%;
+  animation: gradient-move 15s ease infinite;
+}
+
+/* Custom Cursor (Optional Styling) */
+::selection {
+  @apply bg-purple-500/40 text-white;
 }
